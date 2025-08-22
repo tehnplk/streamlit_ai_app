@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 from pydantic_ai.mcp import MCPServerStdio
 
 from AiAgent import AiAgent
-
+from utils import convert_csv_to_tabular
 # กำหนดค่า Agent
 llm = "google-gla:gemini-2.5-flash"
 system_prompt = open("system_prompt_mcp.md", "r", encoding="utf-8").read()
@@ -27,8 +27,9 @@ toolsets = [mcp_mysql]
 
 
 class Output(BaseModel):
-    result: str = Field(description="ผลของการสอบถามข้อมูล")
-    sql: str = Field(description="คำสั่ง SQL ที่ใช้")
+    explain: str = Field(description="explain")
+    result: str = Field(description="csv format")
+    sql: str = Field(description="sql command")
 
 
 agent = AiAgent(
@@ -75,8 +76,7 @@ if user_input := st.chat_input("Enter your question:"):
         )
 
         # แสดงผลลัพธ์
-        print(result.output.result)
-        st.chat_message("assistant").write(result.output.result)
+        st.chat_message("assistant").write(convert_csv_to_tabular(result.output.result))
         if result.output.sql:
             st.chat_message("assistant").code(
                 "คำสั่งที่ใช้\n" + result.output.sql, language="sql"
