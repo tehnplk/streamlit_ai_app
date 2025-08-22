@@ -3,6 +3,7 @@ import asyncio
 
 from AiAgent import AiAgent
 
+# กำหนดค่า Agent
 llm = "google-gla:gemini-2.5-flash"
 system_prompt = open("system_prompt.md", "r", encoding="utf-8").read()
 tools = []
