@@ -4,6 +4,7 @@
 - pip install pydantic-ai  
 - pip install streamlit
 - pip install fastmcp
+- pip install uv
 
 ## ขอ gemini_api_key
 - สมัครและขอ API Key ได้ที่ [Google AI Studio](https://aistudio.google.com/app/apikey)

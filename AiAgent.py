@@ -1,19 +1,18 @@
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerStdio
 from dotenv import load_dotenv
-
+from typing import Optional,Any
 load_dotenv()
 
-system_prompt = open("system_prompt.md", "r", encoding="utf-8").read()
 
 
 class AiAgent:
-    def __init__(self):
+    def __init__(self,llm,system_prompt,tools=[],output_type:Optional[Any]=None):
         self.agent = Agent(
-            model="google-gla:gemini-2.5-flash",
+            model=llm,
             system_prompt=system_prompt,
-            toolsets=[],
-            output_type=str,
+            toolsets=tools,
+            output_type=output_type,
         )
 
     async def chat(self, user_input, message_history=[]):

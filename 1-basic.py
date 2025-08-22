@@ -3,9 +3,13 @@ import asyncio
 
 from AiAgent import AiAgent
 
-agent = AiAgent()
+llm = "google-gla:gemini-2.5-flash"
+system_prompt = open("system_prompt.md", "r", encoding="utf-8").read()
+tools = []
+agent = AiAgent(llm=llm, system_prompt=system_prompt, tools=tools, output_type=str)
 
 # st.set_page_config(layout="wide")
+st.title("My AI Agent Chatbot")
 
 
 # กำหนดค่าเริ่มต้นให้ session state สำหรับประวัติการสนทนา
@@ -24,7 +28,7 @@ if "message_history" not in st.session_state:
 if user_input := st.chat_input("Enter your question:"):
     # เพิ่มข้อความของผู้ใช้ลงในประวัติการสนทนา
     st.session_state["messages"].append({"role": "user", "content": user_input})
-    st.chat_message("user").write(user_input)
+    st.chat_message("user").markdown(user_input)
 
     # รอรับคำตอบจาก AI
     with st.spinner("Thinking..."):
@@ -36,4 +40,4 @@ if user_input := st.chat_input("Enter your question:"):
         st.session_state["messages"].append(
             {"role": "assistant", "content": result.output}
         )
-        st.chat_message("assistant").write(result.output)
+        st.chat_message("assistant").markdown(result.output)
