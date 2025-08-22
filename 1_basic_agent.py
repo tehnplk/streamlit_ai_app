@@ -8,6 +8,8 @@ llm = "google-gla:gemini-2.5-flash"
 system_prompt = open("system_prompt_basic.md", "r", encoding="utf-8").read()
 agent = AiAgent(llm=llm, system_prompt=system_prompt, output_type=str)
 
+# ตั้งค่า page title
+st.set_page_config(page_title="Basic Assistant", page_icon="🔍")
 st.title("Agent Chatbot Basic")
 
 

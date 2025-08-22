@@ -27,14 +27,16 @@ toolsets = [mcp_mysql]
 
 
 class Output(BaseModel):
-    result: str = Field(..., description="Query Result in tabular format and Explain")
-    sql: str = Field(..., description="SQL Query")
+    result: str = Field(description="Query Result in tabular format")
+    sql: str = Field(description="SQL Query")
 
 
 agent = AiAgent(
     llm=llm, system_prompt=system_prompt, toolsets=toolsets, output_type=Output
 )
 
+# ตั้งค่า page title
+st.set_page_config(page_title="SQL Assistant", page_icon="🔍")
 
 st.title("Agent Chatbot ช่วยเขียน SQL")
 
@@ -64,13 +66,17 @@ if user_input := st.chat_input("Enter your question:"):
         new_message_history = result.all_messages()
         st.session_state["message_history"] = new_message_history
 
+        # บันทึกประวัติการสนทนา
         st.session_state["messages"].append(
             {"role": "assistant", "content": result.output.result}
         )
         st.session_state["messages"].append(
             {"role": "assistant", "content": result.output.sql}
         )
-        st.chat_message("assistant").markdown(result.output.result)
+
+        # แสดงผลลัพธ์
+        print(result.output.result)
+        st.chat_message("assistant").write(result.output.result)
         if result.output.sql:
             st.chat_message("assistant").code(
                 "คำสั่งที่ใช้\n" + result.output.sql, language="sql"
