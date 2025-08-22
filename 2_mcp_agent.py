@@ -27,8 +27,8 @@ toolsets = [mcp_mysql]
 
 
 class Output(BaseModel):
-    result: str = Field(description="Query Result in tabular format")
-    sql: str = Field(description="SQL Query")
+    result: str = Field(description="ผลของการสอบถาม แสดงเป็นตารางข้อมูล")
+    sql: str = Field(description="คำสั่ง SQL ที่ใช้")
 
 
 agent = AiAgent(
