@@ -27,7 +27,7 @@ toolsets = [mcp_mysql]
 
 
 class Output(BaseModel):
-    result: str = Field(description="ผลของการสอบถาม แสดงเป็นตารางข้อมูล")
+    result: str = Field(description="ผลของการสอบถามข้อมูล")
     sql: str = Field(description="คำสั่ง SQL ที่ใช้")
 
 
