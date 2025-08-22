@@ -2,16 +2,17 @@ import streamlit as st
 import asyncio
 
 from pydantic import BaseModel, Field
-from pydantic_ai.mcp import MCPServerStdio
+from pydantic_ai.mcp import MCPServerStdio, MCPServerStreamableHTTP, MCPServerSSE
 
 from AiAgent import AiAgent
 from utils import convert_csv_to_tabular
+
 # กำหนดค่า Agent
 llm = "google-gla:gemini-2.5-flash"
 system_prompt = open("system_prompt_mcp.md", "r", encoding="utf-8").read()
 
-# ตั้งค่าเชื่อมต่อฐานข้อมูล
-mcp_mysql = MCPServerStdio(
+# ตั้งค่า mcp-tool เชื่อมต่อฐานข้อมูล
+mcp_mysql_tool = MCPServerStdio(
     "uvx",
     ["--from", "mysql-mcp-server", "mysql_mcp_server"],
     {
@@ -23,7 +24,11 @@ mcp_mysql = MCPServerStdio(
     },
 )
 
-toolsets = [mcp_mysql]
+from ChartTool import chart_toolsets
+
+chart_tool = chart_toolsets
+
+toolsets = [mcp_mysql_tool, chart_tool]
 
 
 class Output(BaseModel):
