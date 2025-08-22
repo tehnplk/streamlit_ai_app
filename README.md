@@ -14,9 +14,10 @@
 - ใส่ gemini_api_key
 
 ## การกำหนด system_prompt 
-- ให้แก้ไขไฟล์ system_prompt.md
+- แก้ไขไฟล์ system_prompt_basic.md
+- แก้ไขไฟล์ system_prompt_mcp.md
 
-## การ run 
+## การ run ใช้คำสั่ง
 - streamlit run 1_basic_agent.py
 - streamlit run 2_mcp_agent.py
 - เปิด browser ไปที่  [http://localhost:8501](http://localhost:8501)
