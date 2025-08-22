@@ -7,11 +7,11 @@ load_dotenv()
 
 
 class AiAgent:
-    def __init__(self,llm,system_prompt,tools=[],output_type:Optional[Any]=None):
+    def __init__(self,llm,system_prompt,toolsets=[],output_type:Optional[Any]=None):
         self.agent = Agent(
             model=llm,
             system_prompt=system_prompt,
-            toolsets=tools,
+            toolsets=toolsets,
             output_type=output_type,
         )
 

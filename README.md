@@ -17,5 +17,9 @@
 - ให้แก้ไขไฟล์ system_prompt.md
 
 ## การ run 
-- streamlit run 1-agent.py
+- streamlit run 1_basic_agent.py
+- streamlit run 2_mcp_agent.py
 - เปิด browser ไปที่  [http://localhost:8501](http://localhost:8501)
+
+## ฐานข้อมูลที่มีข้อมูลส่วนบุคคล
+- ควรใช้ฐานข้อมูลที่มีการเข้ารหัสหรือฐานข้อมูลปลอม

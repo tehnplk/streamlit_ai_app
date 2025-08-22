@@ -5,12 +5,10 @@ from AiAgent import AiAgent
 
 # กำหนดค่า Agent
 llm = "google-gla:gemini-2.5-flash"
-system_prompt = open("system_prompt.md", "r", encoding="utf-8").read()
-tools = []
-agent = AiAgent(llm=llm, system_prompt=system_prompt, tools=tools, output_type=str)
+system_prompt = open("system_prompt_basic.md", "r", encoding="utf-8").read()
+agent = AiAgent(llm=llm, system_prompt=system_prompt, output_type=str)
 
-# st.set_page_config(layout="wide")
-st.title("My AI Agent Chatbot")
+st.title("Agent Chatbot Basic")
 
 
 # กำหนดค่าเริ่มต้นให้ session state สำหรับประวัติการสนทนา
