@@ -8,25 +8,25 @@ agent = AiAgent()
 # st.set_page_config(layout="wide")
 
 
-# Initialize session state for conversation history
+# กำหนดค่าเริ่มต้นให้ session state สำหรับประวัติการสนทนา
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "ถามมาได้เลย.."}]
 
-# Display conversation history
+# แสดงประวัติการสนทนา
 for msg in st.session_state["messages"]:
     st.chat_message(msg["role"]).write(msg["content"])
 
-# Initialize message history for pydantic_ai
+# กำหนดค่าเริ่มต้นให้ message_history สำหรับ agent
 if "message_history" not in st.session_state:
     st.session_state["message_history"] = []
 
 
 if user_input := st.chat_input("Enter your question:"):
-    # Add user message to chat history
+    # เพิ่มข้อความของผู้ใช้ลงในประวัติการสนทนา
     st.session_state["messages"].append({"role": "user", "content": user_input})
     st.chat_message("user").write(user_input)
 
-    # Get AI response
+    # รอรับคำตอบจาก AI
     with st.spinner("Thinking..."):
         message_history = st.session_state["message_history"]
         result = asyncio.run(agent.chat(user_input, message_history))
