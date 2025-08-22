@@ -7,7 +7,7 @@ load_dotenv()
 
 
 class AiAgent:
-    def __init__(self,llm,system_prompt,toolsets=[],output_type:Optional[Any]=None):
+    def __init__(self,llm="google-gla:gemini-2.5-flash",system_prompt="",toolsets=[],output_type:Optional[Any]=str):
         self.agent = Agent(
             model=llm,
             system_prompt=system_prompt,
