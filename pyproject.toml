@@ -11,4 +11,6 @@ dependencies = [
     "streamlit>=1.48.1",
     "tabulate>=0.9.0",
     "matplotlib>=3.9.2",
+    "pydantic-ai-slim[a2a]>=0.7.4",
+    "uvicorn>=0.35.0",
 ]
