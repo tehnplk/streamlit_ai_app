@@ -6,7 +6,10 @@ from pydantic_ai.mcp import MCPServerStdio, MCPServerStreamableHTTP, MCPServerSS
 
 from AiAgent import AiAgent
 from utils import convert_csv_to_tabular
+import os
+from dotenv import load_dotenv
 
+load_dotenv()   
 
 # กำหนดค่า Agent
 llm = "google-gla:gemini-2.5-flash"
@@ -17,11 +20,11 @@ mcp_mysql_tool = MCPServerStdio(
     "uvx",
     ["--from", "mysql-mcp-server", "mysql_mcp_server"],
     {
-        "MYSQL_HOST": "localhost",
-        "MYSQL_PORT": "3310",
-        "MYSQL_USER": "root",
-        "MYSQL_PASSWORD": "112233",
-        "MYSQL_DATABASE": "hos2",
+        "MYSQL_HOST": os.getenv("MYSQL_HOST", "localhost"),
+        "MYSQL_PORT": os.getenv("MYSQL_PORT", "3306"),
+        "MYSQL_USER": os.getenv("MYSQL_USER", "root"),
+        "MYSQL_PASSWORD": os.getenv("MYSQL_PASSWORD", "1234"),
+        "MYSQL_DATABASE": os.getenv("MYSQL_DATABASE", "his"),
     },
 )
 
