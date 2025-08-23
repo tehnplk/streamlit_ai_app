@@ -100,4 +100,4 @@ if user_input := st.chat_input("Enter your question:"):
                 "คำสั่งที่ใช้\n" + result.output.sql, language="sql"
             )
         if result.output.chart:
-            st.chat_message("assistant").image(result.output.chart, caption="Chart", use_column_width=True)
+            st.chat_message("assistant").image(result.output.chart, caption="Chart", use_container_width=True)

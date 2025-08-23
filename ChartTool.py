@@ -55,9 +55,11 @@ def bar_chart(data: str):
         x_col = df.columns[0]
         y_col = df.columns[1] if len(df.columns) > 1 else df.columns[0]
         
-        # Create bar chart
+        # Create bar chart with random colors for each bar
+        import numpy as np
         fig, ax = plt.subplots(figsize=(10, 6))
-        bars = ax.bar(df[x_col].astype(str), df[y_col])
+        colors = plt.cm.Set3(np.linspace(0, 1, len(df)))
+        bars = ax.bar(df[x_col].astype(str), df[y_col], color=colors)
         
         # Add labels and title with proper font
         ax.set_xlabel(x_col)
