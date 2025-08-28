@@ -3,6 +3,7 @@ import asyncio
 
 from pydantic import BaseModel, Field
 from pydantic_ai.mcp import MCPServerStdio, MCPServerStreamableHTTP, MCPServerSSE
+from streamlit.elements.arrow import parse_selection_mode
 
 from AiAgent import AiAgent
 from utils import convert_csv_to_tabular
@@ -31,8 +32,10 @@ class Output(BaseModel):
     explain: str = Field(description="explain")
     result: str = Field(description="csv format")
     sql: str = Field(description="sql command")
-    chart: str = Field(description="file path to chart image")
+    chart: str = Field(description="file path to chart image if error return None")
 
+class Failed(BaseModel):
+    """Unable to find a satisfactory choice."""
 
 agent = AiAgent(
     llm=llm, system_prompt=system_prompt, toolsets=toolsets, output_type=Output
@@ -94,11 +97,9 @@ if user_input := st.chat_input("Enter your question:"):
             st.chat_message("assistant").code(
                 "คำสั่งที่ใช้\n" + result.output.sql, language="sql"
             )
-        if result.output.chart:
-            # Check if the chart path is an error message (not a file path)
-            if result.output.chart.startswith("Error generating"):
-                # Display the error message as text instead of trying to show it as an image
-                st.chat_message("assistant").error(result.output.chart)
-            else:
-                # Display the chart image
+        if result.output.chart:           
+            # Display the chart image
+            try:
                 st.chat_message("assistant").image(result.output.chart, caption="Chart", use_container_width=True)
+            except:
+                pass
