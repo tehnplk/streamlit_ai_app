@@ -97,7 +97,8 @@ if user_input := st.chat_input("Enter your question:"):
             st.chat_message("assistant").code(
                 "คำสั่งที่ใช้\n" + result.output.sql, language="sql"
             )
-        if result.output.chart:           
+        if result.output.chart:   
+            print(result.output.chart)        
             # Display the chart image
             try:
                 st.chat_message("assistant").image(result.output.chart, caption="Chart", use_container_width=True)
