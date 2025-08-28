@@ -16,16 +16,8 @@ llm = "google-gla:gemini-2.5-flash"
 system_prompt = open("system_prompt_mcp.md", "r", encoding="utf-8").read()
 
 # ตั้งค่า mcp-tool เชื่อมต่อฐานข้อมูล
-mcp_mysql_tool = MCPServerStdio(
-    "uvx",
-    ["--from", "mysql-mcp-server", "mysql_mcp_server"],
-    {
-        "MYSQL_HOST": os.getenv("MYSQL_HOST", "localhost"),
-        "MYSQL_PORT": os.getenv("MYSQL_PORT", "3306"),
-        "MYSQL_USER": os.getenv("MYSQL_USER", "root"),
-        "MYSQL_PASSWORD": os.getenv("MYSQL_PASSWORD", "1234"),
-        "MYSQL_DATABASE": os.getenv("MYSQL_DATABASE", "his"),
-    },
+mcp_mysql_tool = MCPServerSSE(
+    url= "http://203.157.118.95:82/sse"
 )
 
 from ChartTool import chart_toolsets
@@ -54,7 +46,7 @@ logfire.instrument_pydantic_ai()
 # ตั้งค่า page title
 st.set_page_config(page_title="SQL Assistant", page_icon="🔍")
 
-st.title("Agent Chatbot ช่วยเขียน SQL")
+st.title("PLK Data Analysis Chatbot")
 
 
 # กำหนดค่าเริ่มต้นให้ session state สำหรับประวัติการสนทนา
@@ -103,4 +95,10 @@ if user_input := st.chat_input("Enter your question:"):
                 "คำสั่งที่ใช้\n" + result.output.sql, language="sql"
             )
         if result.output.chart:
-            st.chat_message("assistant").image(result.output.chart, caption="Chart", use_container_width=True)
+            # Check if the chart path is an error message (not a file path)
+            if result.output.chart.startswith("Error generating"):
+                # Display the error message as text instead of trying to show it as an image
+                st.chat_message("assistant").error(result.output.chart)
+            else:
+                # Display the chart image
+                st.chat_message("assistant").image(result.output.chart, caption="Chart", use_container_width=True)
